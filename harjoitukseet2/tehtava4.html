@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<style type="text/css">
+	.box {
+		border: 2px dashed black;
+		float: left;
+		padding: 3px 10px;
+        background-color:cadetblue;
+	}
+    .button {
+        margin-left: 30%;
+        background-color:rgb(101, 95, 160);
+        color: cornsilk;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+    }
+
+</style>
+
+<body>
+	<div class ="box">
+		<h2 style = "text-align: center">Vauhtilaskin</h2>
+		<form id="f">
+            <table>
+                <tr> <td>Tunnit:     </td> <td><input type="number" id="h">  </td> </tr>
+                <tr> <td>Minuutit:   </td> <td><input type="number" id="min"></td> </tr>
+                <tr> <td>Sekunnit:   </td> <td><input type="number" id="sec"></td> </tr>
+                <tr> <td>Kilometrit: </td> <td><input type="number" id="km"> </td> </tr>
+        </table>
+        
+            <button type="button"  class = "button" onclick="laske(f.h.value, f.min.value, f.sec.value, f.km.value)">Laske vauhdit</button>
+         </form>
+    
+        <div id="kmh"></div>
+        <div id="minkm"></div>
+    <br>
+
+</div>
+
+	<script>
+
+class Vauhtilaskin {
+  constructor(h, min, sec, km) {
+    this.h = h;
+    this.min = min;
+    this.sec = sec;
+    this.km = km;
+  }
+  // Getter
+  get kmhpace() {
+    return this.calcKmhPace()
+  }
+
+  get minkmpace() {
+    return this.calcMinkmPace()
+  }
+  
+  // Metodit kmh-laskentaa
+  calcKmhPace() {
+    return (parseInt(this.km)/(parseInt(this.h)+(parseInt(this.min)*60+parseInt(this.sec))/3600)).toFixed(2)
+  }
+ 
+  // min.sec/km-laskentaa
+  calcMinkmPace() {
+    let sekunnit = parseInt(this.h)*60*60+parseInt(this.min)*60+parseInt(this.sec)
+    let sekunnitPerKm = sekunnit/parseInt(this.km)
+
+    let minutesPerKm = 0
+    while (sekunnitPerKm >= 60){
+  minutesPerKm++;
+  sekunnitPerKm = sekunnitPerKm - 60;
+}
+return String(minutesPerKm + ':' + Math.round(sekunnitPerKm))
+  }
+
+}
+
+let laske = (a, b, c, d) => {
+    const test = new Vauhtilaskin(a, b, c, d)
+
+    document.getElementById("kmh").innerHTML = test.kmhpace + ' km/h'
+    document.getElementById("minkm").innerHTML = test.minkmpace + '/km'
+}
+
+</script>
+</body>
+</html>

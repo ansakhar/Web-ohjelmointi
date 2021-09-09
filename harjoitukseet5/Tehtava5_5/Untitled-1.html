@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Harjoitukset 5 - tehtävä 5 // M9624 Janne Mulari</title>
+    <!-- jQUery UI -->
+    <link
+      rel="stylesheet"
+      href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"
+    />
+  </head>
+  <body>
+    <h2>Etsi etunimi:</h2>
+    <input type="text" />
+    <!-- jQuery kirjasto -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- autocomplete ominaisuuden kirjasto -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- Oma scripti -->
+    <script type="text/javascript">
+      function getList(input, callback) {
+        $.ajax({
+          url: `ajax-suggest.php?q=${input}`,
+          cache: false
+        })
+          .done(data => {
+            console.log("Done");
+            if (data != null) {
+              let names = JSON.stringify(data);
+              let nameArray = names.split(/\Wt|\W/);
+              nameArray = nameArray.filter(name => name.length > 0);
+              console.log(nameArray);
+              callback(nameArray);
+            }
+          })
+          .fail(() => {
+            alert("Error");
+          })
+          .always(() => {
+            console.log("Ajax request ready");
+          });
+      }
+
+      $(document).ready(() => {
+        $("input").autocomplete({
+          source: function(req, res) {
+            // callback funktio, kutsutaan kun ajax funktio on done
+            function match(sourceArray) {
+              let matchTerm = new RegExp(
+                "^" + $.ui.autocomplete.escapeRegex(req.term),
+                "i"
+              );
+              // input elementin sisältö RegExp avulla...
+              console.log(matchTerm);
+              res(
+                $.grep(sourceArray, item => {
+                  return matchTerm.test(item);
+                })
+              );
+            }
+            // haetaan lista inputin sisällön mukaan
+            // sekä viedään callback funktio ajax funktioon
+            getList(req.term, match);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

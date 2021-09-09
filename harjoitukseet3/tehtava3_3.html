@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tulosta tasoitukset</title>
+
+<script>
+var hcpdata = [{ "name": "Ari", "hcp": 54 },
+               { "name": "Pasi", "hcp": 5 },
+               { "name": "Seppo", "hcp": 20 }];
+
+let i = 0;
+function tulosta(arr, lista) {  
+let ulnode = document.getElementById(lista);
+while (i<arr.length) {
+    let linode = document.createElement('li');
+let litext = document.createTextNode(arr[i]['name'] + " " + arr[i]['hcp']);
+linode.appendChild(litext);
+ulnode.appendChild(linode);
+i++;
+}
+    }
+</script>
+
+</head>
+<body>
+    <form id="f">
+        <button type="button" onclick="tulosta(hcpdata, 'hcplist')">Tulosta tasoitukset</button>
+    </form>
+	<ul id="hcplist"></ul>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Tehtävä 2</title>
+  <link rel="stylesheet" href="tyyli.css" type="text/css">
+</head>
+<body>
+<div id = "container">
+<h1>Tehtävälista</h1>
+
+<form id="myForm"><br>
+    <input type="text" id="n">
+    <button type="submit" >Lisää</button>
+ </form>
+
+ <ul id="lista"></ul>
+</div>
+
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ <!-- own code -->
+ <script type="text/javascript">
+ // document ready
+ $(document).ready(function(){
+     $("#myForm").submit(function(e){
+ e.preventDefault(); // remove default submit behavior
+ var elemId = 'content' + Math.floor(Math.random() * 100); //id luominen
+ var rivi = $("#n").val();
+ $("#n").val(""); //inputin ytyhjäminen
+ $("#n").focus(); //focusin asetus tyhjättyyn kenttään
+ // rivin lisaminen
+ $("#lista").append("<li>" + rivi + "<span id='" + elemId + "' style='color:red'> x </span></li>");
+ // rivin poistaminen
+ $("#" + elemId).click(function(){
+  $(this).parent().remove();
+});
+     });
+ });
+
+ </script>
+</body>
+</html>

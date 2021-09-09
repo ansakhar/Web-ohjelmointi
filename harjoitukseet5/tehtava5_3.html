@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Tehtävä 3</title>
+  <link rel="stylesheet" href="tyyli3.css" type="text/css">
+</head>
+
+<body>
+
+<div id = "container">
+
+<h3> Yle kokeilee suomalaista tekoälyä videoleikkaajana</h3>
+<p>Yle kokeilee EM-kisojen 
+    otteluissa suomalaisen startupin AiSpotterin 
+    kehittämää tekoälyä, joka analysoi jokaisen 
+    ottelun, tunnistaa maalit ja leikkaa niistä lyhyet 
+    videot sekä julkaisee ne automaattisesti Yle Areenaan – mahdollisimman nopeasti.</p>
+
+<h3> SM-viikolla mukana ennätysmäärä lajeja</h3>
+<p>Kuudetta kertaa järjestettävä urheilun monilajitapahtuma,
+     SM-viikko tuo kesällä 2022 Saloon lähes 30 eri urheilulajin
+      huiput kisaamaan Suomen mestaruuksista.</p>
+
+<h3> Kansanmusiikki soi kuin soikin Kaustisella tänä kesänä</h3>
+<p>Kaustisen Kansanmusiikkijuhlilla järjestetään tänä kesänä yli
+    20 konsertin sarja virtuaalifestareiden lisäksi. 
+    Yhteen konserttiin otetaan näillä näkymin noin 500 ihmistä.</p>
+
+<h3> Myrskyn kaatama puu vaurioitti sähkörataa</h3>
+<p>Junaliikenne keskeytyi aamulla Tampereen ja Porin välillä
+    ratajärjestelmävian vuoksi, kun myrskytuulet kaatoivat puun
+     sähköradan rakenteisiin Lielahdessa. Rata on vaurioitunut myös
+      Harjavallan ja Nakkilan välillä </p>
+
+</div>
+
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ <!-- own code -->
+ <script type="text/javascript">
+ // document ready
+ $(document).ready(function(){
+     $("p").hide();
+    $("h3").click(function(){
+      $(this).next().animate({height: 'toggle'}, 200);
+    });
+ });
+
+ </script>
+</body>
+</html>

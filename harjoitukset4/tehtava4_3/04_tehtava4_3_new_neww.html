@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tehtävä 2</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h1>Ajax - SearchForm</h1>
+    <input type="text" id="input" placeholder="Find by first name..." autocomplete="off" />
+    <input type="button" id="search" value="Search" />
+    <ul id="suggestions"></ul>
+
+    <script>
+
+        document.getElementById('input').addEventListener('keyup', keyUpFn);
+        document.getElementById('search').addEventListener('click', search);
+
+        let indexForLis = 0;
+        let firstTime = true;
+        let ulnode = document.getElementById("suggestions");
+        let textInput = document.getElementById('input');
+
+        function search() {
+            window.location.href = "ajax-suggest.php?q=" + textInput.value;
+        }
+
+        function keyUpFn() {
+            let pressedKey = event.keyCode;
+            let liElems = document.querySelectorAll('li');
+            let liElemsLen = liElems.length;
+            if (pressedKey == 40) {
+                if (liElemsLen != 0) {
+                    if (firstTime) {
+                        liElems[0].style.backgroundColor = "red";
+                        firstTime = false;
+                    } else {
+                        indexForLis++;
+                        if (indexForLis < liElemsLen) {
+                            liElems[indexForLis].style.backgroundColor = "red";
+                            liElems[indexForLis - 1].style.backgroundColor = "white";
+                        } else {
+                            liElems[liElemsLen - 1].style.backgroundColor = "white";
+                            indexForLis = 0;
+                            liElems[indexForLis].style.backgroundColor = "red";
+                        }
+                    }
+                }
+            } else if (pressedKey == 38) {
+                if (liElemsLen != 0) {
+                    if (firstTime) {
+                        indexForLis = liElemsLen - 1;
+                        liElems[indexForLis].style.backgroundColor = "red";
+                        firstTime = false;
+                    } else {
+                        indexForLis--;
+                        if (indexForLis < 0) {
+                            liElems[0].style.backgroundColor = "white";
+                            indexForLis = liElemsLen - 1;
+                            liElems[indexForLis].style.backgroundColor = "red";
+                        } else {
+                            liElems[indexForLis].style.backgroundColor = "red";
+                            liElems[indexForLis + 1].style.backgroundColor = "white";
+                        }
+                    }
+                }
+            } else if (pressedKey == 13) {
+                let nodeValue = liElems[indexForLis].childNodes[0].nodeValue;
+                textInput.value = nodeValue;
+                fetchData();
+            } else if (pressedKey == 27) {
+                textInput.value = "";
+                while (ulnode.hasChildNodes()) {
+                    ulnode.removeChild(ulnode.firstChild);
+                }
+            } else {
+                fetchData();
+            }
+        }
+
+        function fetchData() {
+            firstTime = true;
+            indexForLis = 0;
+            while (ulnode.hasChildNodes()) {
+                ulnode.removeChild(ulnode.firstChild);
+            }
+            let url = "ajax-suggest.php?q=";
+            if (textInput.value != "") {
+                url += textInput.value;
+                ajax(url, function (response) {
+                    let whiteSpace = /\s/;
+                    let names = response.split(whiteSpace);
+                    for (let name of names) {
+                        let linode = document.createElement('li');
+                        let litext = document.createTextNode(name);
+                        linode.addEventListener('click', function () { usePHP(this.childNodes[0].nodeValue) });
+                        linode.appendChild(litext);
+                        ulnode.appendChild(linode);
+                    }
+                })
+            }
+        }
+
+        function ajax(url, fn) {
+            var req;
+            if (window.XMLHttpRequest) {
+                req = new XMLHttpRequest();
+            } else {
+                req = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    if (req.responseText != "") {
+                        fn(req.responseText);
+                    }
+                }
+            }
+            req.open('GET', url, true);
+            req.send();
+        }
+
+        let usePHP = (nodeValue) => {
+            window.location.href = "ajax-suggest.php?q=" + nodeValue;
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Tehtävä 1</title>
+</head>
+<body>
+
+<h2>Simple ToDo</h2>
+
+<form id="f">ToDo:<br>
+    <input type="text" id="n"><br>
+    <button type="button" onclick="lisaaRivi(f.n.value)">Lisää</button>
+    <button type="button" onclick="tyhjaaLista()">Tyhjää lista</button>
+ </form>
+ 
+ <ul id="lista"></ul>
+ 
+ <script>
+
+   function lisaaRivi(rivi) {  
+let ulnode = document.getElementById("lista");
+let linode = document.createElement('li');
+let litext = document.createTextNode(rivi);
+linode.appendChild(litext);
+ulnode.appendChild(linode);
+    }
+
+    function tyhjaaLista() {
+var list = document.getElementById("lista");
+    while(list.hasChildNodes()) {
+        list.removeChild(list.firstChild);
+        document.getElementById("f").reset();
+           }
+    }
+
+ </script>
+</body>
+</html>

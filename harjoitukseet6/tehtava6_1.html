@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tehtava 1</title>
+<script>
+function drawToCanvas() {
+	// find the <canvas> element
+	var canvas  = document.getElementById("myCanvas");
+	// get canvas context
+	var ctx = canvas.getContext("2d");
+    // text
+	ctx.fillStyle="#000000";
+	ctx.font="bold 16px Times New Roman";
+	ctx.fillText("Canvas-harjoitus: Piirrä Ruotsin ja Guyanan liput",10,15);
+
+    //Ruotsin lipun piirtäminen:
+	ctx.fillStyle="#ffff00";// define fill style
+	//draw filled rectangle - fillRect(x,y,width,height)
+	//ctx.strokeStyle = "#000000";
+    ctx.strokeRect(5,20,390,190);
+    ctx.fillRect(5,20,390,190);
+
+    ctx.fillStyle="#0000ff";
+    ctx.strokeRect(5,20,100,75);
+    ctx.fillRect(5,20,100,75);
+
+    ctx.fillStyle="#0000ff";
+    ctx.strokeRect(5,135,100,75);
+    ctx.fillRect(5,135,100,75);
+
+    ctx.fillStyle="#0000ff";
+    ctx.strokeRect(145,20,250,75);
+    ctx.fillRect(145,20,250,75);
+
+    ctx.fillStyle="#0000ff";
+    ctx.strokeRect(145,135,250,75);
+    ctx.fillRect(145,135,250,75);
+
+    //Guyanan lipun piirtäminen:
+	ctx.fillStyle="#009e49";
+   
+	ctx.fillRect(5,220,390,190);
+
+   ctx.fillStyle = "#fcd116";
+   ctx.beginPath();
+   ctx.moveTo(5,223);
+   ctx.lineTo(388,315);
+   ctx.lineTo(5,407);
+   ctx.strokeStyle = "white";
+   ctx.lineWidth = 5;
+   ctx.stroke();        // line
+   ctx.lineTo(5,223);
+   ctx.closePath();
+   ctx.fill();
+
+   ctx.fillStyle = "#ce1126";
+   ctx.beginPath();
+   ctx.moveTo(5,223);
+   ctx.lineTo(190,315);
+   ctx.lineTo(5,407);
+   ctx.strokeStyle = "black";
+   ctx.lineWidth = 7;
+   ctx.stroke();        // line
+   ctx.lineTo(5,223);
+   ctx.closePath();
+   ctx.fill();
+
+   ctx.lineWidth = 0.5;
+   ctx.strokeRect(5,220,390,190);
+
+}
+</script>
+</head>
+
+<body onload="drawToCanvas()">
+<div>
+	<canvas id="myCanvas" width="400" height="415" style="border:1px solid #000000;">
+    </canvas>
+    
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tehtävä 2</title>
+        <meta charset="utf-8" />
+    </head>
+    
+    <body>
+        <div id="box">
+            <input list="names" id="searchInput">
+            <datalist id="names"></datalist>
+            <input type="submit" id="searchSubmit">
+            <p id="testResults"></p>
+        </div>
+        
+        <script>
+            let input = document.getElementById('searchInput');
+            input.addEventListener('keyup', function() {
+                loadResults(input.value);
+            });
+            
+            let butan = document.getElementById('searchSubmit');
+            butan.addEventListener('click', function() {
+                window.location.href = 'ajax-suggest.php?q=' + input.value;
+            });
+            
+            function ajax(url, fn) {
+                try {
+                    var xhr = new XMLHttpRequest();
+                } catch(e) {
+                    alert(e);
+                }
+                xhr.open("GET", url, true);
+                xhr.send();
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState == 4 && xhr.status==200) {		
+                        fn(xhr.responseText);
+                    }
+                }
+            }
+            
+            function loadResults(inputValue) {
+                ajax('ajax-suggest.php?q=' + inputValue, function(response) {
+                    let values = response.split('\t');
+                    let datalistNode = document.getElementById('names');
+                    
+                    while(datalistNode.firstChild) {
+                        datalistNode.removeChild(datalistNode.firstChild);
+                    }
+                    
+                    for(let name of values) {
+                        let optionNode = document.createElement('option');
+                        optionNode.value = name;
+                        optionNode.className = "node";
+                        datalistNode.appendChild(optionNode);
+                    }
+                    
+                    let results = document.getElementById('testResults');
+                    results.innerHTML = response;
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tehtava 1</title>
+</head>
+
+<body>
+    <h2>Lukujen suuma</h2>
+
+    <form id="myForm">
+        Luku 1: <input type=text id="n1"><br>
+        Luku 2: <input type=text id="n2"><br><br>
+        <input type="submit" value="Summa">
+     </form>
+     <br>
+
+    <div id="results"></div>
+
+	<!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- own code -->
+    <script type="text/javascript">
+    // document ready
+    $(document).ready(function(){
+        $("#myForm").submit(function(e){
+                // remove default submit behavior
+    e.preventDefault();
+             // lue luvut lomakkeelta (ovat merkkijonoja)
+    var summa = +$("#n1").val() + +$("#n2").val();
+    $("#results").text("Lukujen summa on " + summa );
+        });
+    });
+    </script>
+</body>
+</html>
+
+

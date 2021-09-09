@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>tehtava9_1.html</title>
+</head>
+
+<body>
+    <h2>Highscores</h2>
+
+    <div id="root" class="box"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script type="text/babel">
+
+//highscore-data:
+let highscoreData = [
+  { id: 1, name: 'Jason', score: 4000 },
+  { id: 2, name: 'Make', score: 3000 },
+  { id: 3, name: 'Bill', score: 2000 },
+  { id: 4, name: 'Liza', score: 1000 }
+];
+
+// Highscores component
+class Highscores extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {highscores: [], loaded: false};
+    this.onButtonClicked = this.onButtonClicked.bind(this);
+    this.getHighscores = this.getHighscores.bind(this);
+  }
+
+  // onclick event:
+  onButtonClicked () {
+      this.setState({ highscores: [], loaded: false});
+  }
+
+  //Latauksen "hitaus":
+  getHighscores () {
+  setTimeout(() => this.setState({highscores: highscoreData, loaded:true}), 3000);
+}
+
+  render() {
+    // Jos dataa EI ole VIELÄ ladattu:
+    if(!this.state.loaded) {
+        this.getHighscores();
+    return (
+<div>Loading...</div>
+    );
+    }
+
+    else {
+        return (
+            <div>
+            <ul>{
+                this.state.highscores.map(function (highscore, index) {
+      return <li key={ index }>{highscore.name} : {highscore.score}</li>;
+    })
+
+} </ul>
+ <button onClick = {this.onButtonClicked.bind(this)}> Load again</button>
+</div>
+        )
+    }
+  }
+
+}
+
+// render
+ReactDOM.render(
+    <Highscores/>,
+    document.getElementById("root")
+);
+    </script>
+    </body>
+</html>

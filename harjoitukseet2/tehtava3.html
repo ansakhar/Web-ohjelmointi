@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<style type="text/css">
+	.box {
+		border: 1px solid black;
+		float: left;
+		padding: 3px 10px;
+	}
+
+</style>
+
+<body>
+	<div class ="box">
+		<div id="t"> </div>
+		<div>tulostamista ja keskeisten suureiden laskemista</div>
+        <div>anonyymeillä funktioilla</div>	
+<hr >
+<p id="results"></p>
+
+</div>
+
+	<script>
+
+const t = [11, 22, 33, 44]
+
+document.getElementById("t").innerHTML = "<h2>Taulukon [" + t + "] läpikäyntiä</h2>";
+
+//tulosrivit:
+let printArray = (arr) => {
+    let tulosrivit =""
+  for(let i = 0; i < arr.length; i++) {
+    tulosrivit = tulosrivit + "<div>taulukko[" + i + "] = " + arr[i] + "</div>";
+  }
+  return tulosrivit
+}
+
+//lukumaara:
+let arrayCount = (arr) => arr.reduce((a,b) => a + 1, 0)
+
+//summa:
+let arraySum = (arr) => arr.reduce((a,b) => a + b, 0)
+
+//keskiarvo:
+let arrayAvg = (arr) => (arraySum(arr) / arrayCount(arr)).toFixed(1)
+
+let sisalto = `
+Alkiot ovat:<br><br>
+<div> ${printArray(t)} </div><br>
+<div>Lukumaara on: ${arrayCount(t)}</div>
+<div>Summa on: ${(arraySum(t))} </div>
+<div>Keskiarvo on: ${arrayAvg(t)} </div>
+`;
+
+let para = document.getElementById("results");
+para.innerHTML   = sisalto;
+
+</script>
+</body>
+</html>

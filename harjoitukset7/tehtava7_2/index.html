@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <title>Golfin kulta- ja etukentät</title>
+      <meta charset="UTF-8">
+
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+      integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+      crossorigin=""/>
+
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+   crossorigin=""></script>
+
+
+<style type="text/css">
+   #mapid { height: 1024px; width: 1024px;} 
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background:#ffc;
+  font-size:12px;
+  line-height:18px;
+  position: relative;
+  top: -30px
+  }
+.custom-popup .leaflet-popup-content-wrapper a {
+  color:rgba(0,0,255,0.5);
+  }
+.custom-popup .leaflet-popup-tip-container {
+  width:30px;
+  height:15px;
+  }
+.custom-popup .leaflet-popup-tip {
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:15px solid #2c3e50;
+  }
+
+</style>
+
+   </head>
+
+   <body>
+      <h3>Golfin kulta- ja etukentät</h3>
+
+<div class='custom-popup' id="mapid"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<script>
+var mymap = L.map('mapid').setView([62.2527, 25.7473], 8);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    accessToken: 'pk.eyJ1IjoiYW5zYWtoYXIiLCJhIjoiY2txcWh6dWlpMHkydzJ4cWhuYXo5NnB2MCJ9.fVPSQDQeV_1J-Ay1Ey_o0w'
+}).addTo(mymap);
+
+var yellowIcon = L.icon({
+    iconUrl: 'yellow-dot.png', // Tämä tiedosto sinun pitää itse hakea jostakin ilmaisesta
+    iconSize:     [32, 32], // size
+    iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-32, -32] // point from which the popup should open relative to the iconAnchor
+});
+
+var redIcon = L.icon({
+    iconUrl: 'red-dot.png', 
+    iconSize:     [32, 32], // size
+    iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-32, -32] // point from which the popup should open relative to the iconAnchor
+});
+
+var blueIcon = L.icon({
+    iconUrl: 'blue-dot.png', 
+    iconSize:     [32, 32], // size
+    iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-32, -32] // point from which the popup should open relative to the iconAnchor
+});
+
+var greenIcon = L.icon({
+    iconUrl: 'green-dot.png', 
+    iconSize:     [32, 32], // size
+    iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-32, -32] // point from which the popup should open relative to the iconAnchor
+});
+
+$.ajax({
+           url: 'kentat.json'
+    }).fail(function() {
+            console.log("fail!");
+    }).done(function(data) {
+        // loop through all courses
+        $.each(data.kentat, function(index, kentta) {
+           // marker, get position lat and lng
+        
+            console.log(kentta);
+            if (kentta.Tyyppi == "Kulta") var marker = L.marker([kentta.lat, kentta.lng], {icon: yellowIcon}).addTo(mymap);
+            if (kentta.Tyyppi == "Kulta/Etu") var marker = L.marker([kentta.lat, kentta.lng], {icon: redIcon}).addTo(mymap);
+            if (kentta.Tyyppi == "?") var marker = L.marker([kentta.lat, kentta.lng], {icon: blueIcon}).addTo(mymap);
+            if (kentta.Tyyppi == "Etu") var marker = L.marker([kentta.lat, kentta.lng], {icon: greenIcon}).addTo(mymap);
+
+               /* Tähän ohjelmakoodi, jossa markkeriin liitetään tapahtumakuuntelija klikkausta varten
+                sekä ohjelmoidaan toiminnot sitten popup-ikkunan informaation näyttämiselle JSON-
+                tiedostin tietojen perusteella.
+            */
+           marker.bindPopup("<h1>"+kentta.Kentta+"</h1>"+
+            "<div>"+kentta.Kuvaus+"</div><br>"+
+            "<div>Tyyppi: "+kentta.Tyyppi+"</div>"+
+            "<div>Osoite: "+kentta.Osoite+"</div>"+
+            "<div>Puhelin: "+kentta.Puhelin+"</div>"+
+            "<div>Email: "+kentta.Sahkoposti+"</div>"+
+            "<div>Web: <a href="+kentta.Webbi+"</a>"+kentta.Webbi+"</div>");
+          });
+        });
+
+
+
+</script>
+
+
+   </body>
+
+</html>

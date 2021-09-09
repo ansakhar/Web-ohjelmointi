@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<style type="text/css">
+	.box {
+		border: 1px solid black;
+		float: left;
+		padding: 3px 10px;
+	}
+
+</style>
+
+<body>
+	<div class ="box">
+		<div id="t"> </div>
+		<div>tulostamista ja keskeisten suureiden laskemista</div>
+        <div>anonyymeillä funktioilla</div>	
+<hr >
+   <p>Alkiot ovat:</p>
+
+    <div id="results"></div>
+   
+</div>
+
+	<script>
+
+const t = [11, 22, 33, 44]
+
+document.getElementById("t").innerHTML = "<h2>Taulukon [" + t + "] läpikäyntiä</h2>";
+
+//tulosrivit:
+let printArray = function(arr) {
+    let tulosrivit =""
+  for(let i = 0; i < arr.length; i++) {
+    tulosrivit = tulosrivit + "<div>taulukko[" + i + "] = " + arr[i] + "</div>";
+  }
+  return tulosrivit
+}
+
+//lukumaara:
+let arrayCount = function(arr) {
+    let lkm = 0
+    for (let value of arr) {
+	lkm += 1
+  }
+  return lkm;
+}
+
+//summa:
+let arraySum = function(arr) {
+    let s = 0
+  for(let i = 0; i < arr.length; i++) {
+    s += arr[i]
+  }
+  return s
+}
+
+//keskiarvo:
+let arrayAvg = function(arr) {
+    let ka = (arraySum(arr) / arrayCount(arr)).toFixed(1)
+  return ka
+}
+
+function writeResults() {
+  document.getElementById("results").innerHTML =
+  "<div>" + printArray(t) + "</div><br>" + 
+  "<div>Lukumaara on: " + arrayCount(t) + "</div>" + 
+  "<div>Summa on: " + arraySum(t) + "</div>" + 
+  "<div>Keskiarvo on: " + arrayAvg(t) + "</div>";
+}
+
+window.onload = writeResults;
+
+</script>
+</body>
+</html>

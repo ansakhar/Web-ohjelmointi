@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tehtava 4</title>
+
+
+<body onload="myFunction()">
+
+<div style="padding: 0 70px; font: 16px Times New Roman">
+
+    <label>Säädä nestepinnan korkeus </label><br>
+    <label id="demo" style="padding: 0 0 0 70px;">0</label><label> cm</label><br>
+    <label>0 cm</label>
+    <input type="range" id="kork" value="0" min="0" max="200" oninput="myFunction()">
+    <label>200 cm</label>
+
+</div>
+   
+<div>
+	<canvas id="myCanvas" width="400" height="415" style="border:1px solid #000000;">
+    </canvas>
+    
+</div>
+
+<script>
+var canvas  = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var input = document.getElementById("kork");
+
+function myFunction() {
+  document.getElementById("demo").innerHTML = input.value;
+  drawToCanvas();
+}
+
+function drawToCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.arc(200, 200, 100, 0, 2 * Math.PI);
+    ctx.stroke();
+    
+    var korkeus = input.value;
+    var r = 100;
+    var h;
+    if(korkeus <= r) {h = r - korkeus}
+    else {h = korkeus - r};
+    var ymTilavuus = Math.PI*r*r*(korkeus/2);
+    console.log("ymTilavuus", ymTilavuus);
+
+    var angle = Math.acos(h/r);
+    console.log("angle",angle);
+
+    var nesteMaara = (ymTilavuus/1000).toFixed(2);
+    console.log("nesteMaara", nesteMaara);
+
+    ctx.fillStyle= "blue";
+        ctx.beginPath();
+        if(korkeus==2*r)
+        {ctx.arc(200,200,100,0,2 * Math.PI)}
+        else{
+        if(korkeus <= r)
+        {ctx.arc(200,200,100,Math.PI/2 - angle,Math.PI/2+angle)}
+        else {ctx.arc(200,200,100,1.5*Math.PI+angle,1.5*Math.PI-angle)};};
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle="#000000";
+	ctx.font="16px Times New Roman";
+	ctx.fillText("Tynnyrin pituus: 100 cm",10,15);
+    ctx.fillText("Tynnyrin halkaisija: 200 cm",10,30);
+    ctx.fillText("Tynnyrin tilavuus: 3141.59 litraa",10,45);
+    ctx.fillText("Nestemäärä:",10,70);
+    ctx.font="bold 16px Times New Roman";
+    ctx.fillText(nesteMaara+" litraa",10,90);
+
+}
+</script>
+</head>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>react06-99.html</title>
+    <style>
+        body {width: 400px; margin: auto}
+       .box {
+         border: 1px dashed #000; padding: 15px; background-color: #adbed8;
+       }
+       </style>
+</head>
+
+<body>
+    <h2>Autolaskuri</h2>
+
+    <div>Klikkaa mieleistä auton kuvaa</div>
+
+    <div id="root" class="box"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script type="text/babel">
+
+// Counter component
+class Autolaskuri extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {count: [0, 0]};
+    this.onImageClicked = this.onImageClicked.bind(this);
+  }
+
+  // onclick event
+  onImageClicked (i) {
+      /*
+      myös toimii:
+      if(i==0)
+      this.setState({count: [this.state.count[i] + 1, this.state.count[1]]});
+      if(i==1)
+      this.setState({count: [this.state.count[0], this.state.count[i] + 1]});*/
+      this.state.count[i]++;
+      this.setState(this.state.count);
+      console.log(this.state.count);
+  }
+
+  render() {
+    return (
+      <div>
+          <div>Escorts : {this.state.count[0]}</div>
+          <img src="kuva1.jpg" onClick={this.onImageClicked.bind(this,0)} width="200" height="140"></img>
+
+          <div>Passats : {this.state.count[1]}</div>
+          <img src="kuva2.jpg" onClick={this.onImageClicked.bind(this,1)} width="200" height="140"></img>
+      </div>
+    );
+  }
+
+}
+
+// render
+ReactDOM.render(
+    <Autolaskuri/>,
+    document.getElementById("root")
+);
+    </script>
+    </body>
+</html>

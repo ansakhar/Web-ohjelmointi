@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Tehtävä 6</title>
+</head>
+<style>
+.big {
+  background-color: #acbcd6;
+  padding: 10px 10px;
+  border-style: dashed;
+  float: left;
+  width: 300px;
+}
+.small {
+  background-color:#acbcd6;
+  padding: 10px 10px;
+  border-style: dashed;
+}
+button {
+    border-radius: 4px;
+    background-color: #0f6596;
+    padding: 6px 12px;
+    color: white;
+}
+    </style>
+<body>
+<form id="bigForm" class="big" onchange="naytaVari()">
+<div>Valitse juhlaväri <br>
+    <select id="colorSelect" size="1">
+      <option selected value="ei valittu!">Valitse väri</option>
+        <option value="#ff0">Keltainen</option>
+        <option value="#ff0000">Punainen</option>
+        <option value="#F5F5DC">Beige</option>
+      </select>
+    </div>
+
+<div>Mikä juhla? <br>
+    <input type="text" id="juhlaInput" oninput="mikaJuhla(juhlaInput.value)"><br>
+</div>
+<br>
+
+<button type="button" onclick="vaihdaVari()">Vaihda valittu taustaväri</button><br>
+<br>
+
+  <div id="smallForm" class="small">
+      <div style="font-weight: bold">Tulosalue</div>
+   <div id="vari"></div><br>
+   <div id="juhla"></div>
+
+    </div>
+
+</form>
+
+ <script>
+
+function naytaVari() {
+    var x = document.getElementById("colorSelect").value;
+  document.getElementById("vari").innerHTML = "Valittu: " + x;
+  return x;
+}
+
+function mikaJuhla(j) {
+    var x = document.getElementById("juhlaInput").value;
+
+let regex = /\d/g;
+if(regex.test(j)) document.getElementById("juhla").innerHTML = "Virhe: numeroita ei käy!"
+else
+  document.getElementById("juhla").innerHTML = x;
+}
+
+function vaihdaVari() {
+  document.getElementById("smallForm").style.backgroundColor = naytaVari();
+}
+
+ </script>
+</body>
+</html>

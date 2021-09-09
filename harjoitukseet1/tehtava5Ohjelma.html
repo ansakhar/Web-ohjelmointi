@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<style type="text/css">
+	.box {
+		border: 1px solid black;
+		float: left;
+		padding: 0 10px;
+	}
+	p {
+		line-height: 3px;	
+	}
+</style>
+
+<body>
+	<div class ="box">
+		<p id="t"> </p>
+		<div>for- ja for...of-silmukoilla</div>	
+<hr >
+   <div>Alkiot ovat:</div>
+
+   <p id="tulos"></p>
+  <br>  
+	<p id="lkm"> </p>
+    <p id="sum"> </p>
+    <p id="ka"> </p>
+   
+</div>
+
+	<script>
+
+var t = [11, 22, 33, 44]
+document.getElementById("t").innerHTML = "<h2>Taulukon [" + t + "] läpikäyntiä</h2>";
+
+//tulosrivit:
+let tulosrivit ="";
+for (let i = 0; i< t.length; i++) {
+  tulosrivit = tulosrivit + "<p>taulukko[" + i + "] = " + t[i] + "</p>";
+}
+document.getElementById("tulos").innerHTML = tulosrivit;
+
+
+//lukumaara:
+let lkm = 0;
+for (let value of t) {
+	lkm += 1
+}
+document.getElementById("lkm").innerHTML = "Lukumaara on: " + lkm;
+
+//summa:
+let summa = 0;
+for (let value of t) {
+	summa +=  value
+}
+document.getElementById("sum").innerHTML = "Summa on: " + summa;
+
+//keskiarvo:
+let ka = (summa / lkm).toFixed(1);
+document.getElementById("ka").innerHTML = "Keskiarvo on: " + ka;
+
+</script>
+</body>
+</html>

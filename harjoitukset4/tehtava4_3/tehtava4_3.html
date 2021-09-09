@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<!-- tehtava4_3.html -->
+<head>
+
+</head>
+<body>
+
+<p style="color: #53949c; font-weight: bold"><b>Ajax - SearchForm</b></p>
+
+  <input style="color: #53949c" type="text" id="fname" placeholder="Find by first name..." autocomplete="off" onkeyup="keySearch(fname.value)">
+  <input type="button" value="Search" onclick="searchNimi()">
+
+<br>
+
+<div style="color: #53949c" id="txtHint"></div>
+
+<script>
+
+var result = "";
+var index = 0;
+var x = document.getElementsByTagName("A");
+
+function keySearch(field) {
+   // 40=Down,38=Up,13=Enter,27=Esc
+	var keyCode = event.keyCode;
+
+	   if(keyCode == 40) {
+        console.log("length", x.length);
+        if (index < x.length) {
+		   index++;          
+document.getElementById("index" + (index-1)).style.backgroundColor = "yellow";
+if (index != 1)
+document.getElementById("index" + (index-1-1)).style.backgroundColor = "white";
+           }
+           console.log("index", index);
+	   } else if(keyCode == 38) {
+        console.log("length", x.length);
+        if (index >= 1) {
+		   index--;
+           if (index != 0) document.getElementById("index" + (index-1)).style.backgroundColor = "yellow";
+if (index != x.length)
+document.getElementById("index" + (index)).style.backgroundColor = "white";
+           }
+           console.log("index", index);
+	   } else if(keyCode == 13) {
+        var uusi = document.getElementById("fname");
+        var element = document.getElementById("index" + (index-1));
+        var nimi = element.getAttribute("name");
+        uusi.value = nimi;
+        console.log("nimi", nimi);
+        ajaxSearch(nimi);
+        index = 0;
+	   } else if(keyCode == 27) {
+        var uusi = document.getElementById("fname");
+        uusi.value = "";
+        ajaxSearch(uusi.value);
+	   } else {
+           ajaxSearch(field);
+           index = 0;
+        }
+    }
+
+function ajaxSearch(str) {
+    document.getElementById("txtHint").innerHTML = "";
+  if (str.length == 0) {
+    return;
+  } else {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          var persons = [];
+          persons = parsePersonsToArray(this.responseText);
+          console.log(persons);
+          appendPersonResultsToResultsDiv(persons);
+      }
+    }
+    xmlhttp.open("GET", "ajax-suggest.php?q="+str, true);
+    xmlhttp.send();
+  }
+}
+
+function parsePersonsToArray(jono) {
+    return jono.split('\t');
+}
+
+function appendPersonResultsToResultsDiv(array) {
+resultsDiv = document.getElementById("txtHint");
+var searchPlainResults = [];
+if (array.length != 0 && resultsDiv.children.length == 0) {
+    for(var i = 0; i < array.length; i++) {
+
+        var div = document.createElement("div");
+        var elemId = "index" + i;
+        div.id = elemId;
+        console.log(div);
+        var a = document.createElement("a");
+    
+        a.setAttribute("href", "ajax-suggest.php?q=" + array[i]);        
+        var text = document.createTextNode(array[i]);
+        a.appendChild(text);
+        div.setAttribute("name",array[i]);
+        div.appendChild(a);
+        resultsDiv.appendChild(div);
+        
+        const elem = document.getElementById(elemId);
+console.log(elem.getAttribute("name"));
+        
+        searchPlainResults.push(array[i]);
+        result = searchPlainResults[0];
+    }
+}
+}
+
+function searchNimi() {
+    window.location.assign("ajax-suggest.php?q=" + result);
+        }
+
+</script>
+
+</body>
+</html>

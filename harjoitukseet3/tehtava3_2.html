@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Tehtävä 2</title>
+</head>
+<body>
+
+<div id="kuvat"></div>
+
+ <div id="kuva"></div>
+ 
+ <script>
+
+//Kuvat:
+let images = ['"kuvat2/Kuva1.jpg"', '"kuvat2/Kuva2.jpg"', '"kuvat2/Kuva3.jpg"', '"kuvat2/Kuva4.jpg"', '"kuvat2/Kuva5.jpg"', '"kuvat2/Kuva6.jpg"', '"kuvat2/Kuva7.jpg"', '"kuvat2/Kuva8.jpg"'];
+
+//Oletuksena näytetään kuva1:
+let foto = images[0];
+let nextKuva = document.getElementById("kuva");
+    nextKuva.innerHTML   = "<img style = 'width:auto;' src=" + foto + " />";
+
+//Tehdään menu:
+let printArray = (arr) => {
+    let menurivi ="<table><tr>"
+  for(let i = 0; i < arr.length; i++) {
+    menurivi = menurivi + 
+    "<td style = 'text-decoration: underline; color: #8133FF' onclick='naytaKuva(" +
+     arr[i] + ")'> KUVA" + (i+1) + " |</td>";
+  }
+  menurivi = menurivi + "</tr></table>";
+  return menurivi
+}
+document.getElementById("kuvat").innerHTML = printArray(images);
+
+//Näytään linkkitekstiä vastaava kuva:
+function naytaKuva(foto) { 
+    let nextKuva = document.getElementById("kuva");
+    nextKuva.innerHTML   = "<img style = 'width:auto;' src=" + foto + " />";
+    }
+
+ </script>
+</body>
+</html>

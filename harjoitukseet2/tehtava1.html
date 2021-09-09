@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+    <h2>Laske luvut yhteen</h2>
+
+    <form id="f">
+        <input type=text id="n1"><br>
+        <input type=text id="n2"><br>
+        <button type="button" onclick="tulostaSumma(f.n1.value, f.n2.value)">Laske</button>
+     </form>
+
+    <div id="results"></div>
+
+
+	<script>
+
+let tulostaSumma = (a, b) => document.getElementById("results").innerHTML = "Summa = " + laskeSumma(a, b)
+let laskeSumma = (a, b) => {
+    return Number(a) + Number(b)
+}
+               </script>
+</body>
+</html>
+
+

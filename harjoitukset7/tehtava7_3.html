@@ -1,0 +1,80 @@
+<html>
+<title>tehtava7_3</title>
+<body>
+
+<button type="button" onclick="addcar(0)">Ford</button>
+<button type="button" onclick="addcar(1)">Opel</button>
+<button type="button" onclick="addcar(2)">Toyota</button>
+<button type="button" onclick="nollaa()">Nollaa</button>
+
+<h2>Autolaskuri</h2>
+<canvas id="myChart" width="400" height="400"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+<script>
+
+var chart;
+
+    function drawchart(){
+var ctx = document.getElementById("myChart").getContext('2d');
+chart = new Chart(ctx, {
+    // The type of chart we want to create
+//    type: 'horizontalBar',
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: ["Ford", "Opel", "Toyota"],
+        datasets: [{
+            label: "Lukumäärä (kpl)",
+            data: [7, 3, 8],
+            backgroundColor: [
+                'rgba(0,143,217,255)',
+                'rgba(144,94,154,255)',
+                'rgba(0,184,157,255)'
+            ]
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        title: {
+            display: true,
+            text: "Autojen lukumäärät"
+        },
+        legend: {
+            display: false
+
+        },
+	responsive: false,
+        scales: {
+            yAxes: [{
+                barThickness: 100,
+                ticks: {
+                    beginAtZero:true,
+                    fixedStepSize: 1
+                }
+            }]
+        }
+   }
+});
+    }
+    drawchart();
+
+function addcar(carnumber)
+{
+    chart.data.datasets[0].data[carnumber]++;
+    chart.update();
+}
+
+function nollaa()
+{
+    for (let i = 0; i < chart.data.datasets[0].data.length; ++i)
+            chart.data.datasets[0].data[i] = 0;
+    chart.update();
+}
+
+</script>
+
+
+</body></html>

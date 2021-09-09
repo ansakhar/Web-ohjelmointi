@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Tehtävä 4</title>
+</head>
+<style>
+    table, td {
+      border: 1px solid black;
+    }
+    </style>
+<body>
+
+ <table>
+    <tr>
+      <td style = "text-align: center; background-color: aqua;">T1</td>
+      <td style = "text-align: center; background-color: aqua;">T2</td>
+      <td style = "text-align: center; background-color: aqua;">T3</td>
+      <td style = "text-align: center; background-color: aqua;">T4</td>
+    </tr>
+    <tr>
+      <td><input type="text" id="n1" value="0" size="3"> </td>
+      <td><input type="text" id="n2" value="0" size="3"> </td>
+      <td><input type="text" id="n3" value="0" size="3"> </td>
+      <td><input type="text" id="n4" value="0" size="3"> </td>
+    </tr>
+  </table>
+
+
+ <div id="pisteet"></div>
+ <div id="arvosana"></div>
+ 
+ <script>
+
+document.getElementById("n1").addEventListener("blur", fn);
+document.getElementById("n2").addEventListener("blur", fn);
+document.getElementById("n3").addEventListener("blur", fn);
+document.getElementById("n4").addEventListener("blur", fn);
+
+function fn() {
+  if ((n1.value <= 6 && n1.value >= 0)&&(n2.value <= 6 && n2.value >= 0)&&
+  (n3.value <= 6 && n3.value >= 0)&&(n4.value <= 6 && n4.value >= 0))
+   {
+document.getElementById("pisteet").innerHTML = "Pistemäärä (summa): " + laskeSumma(n1.value, n2.value, n3.value, n4.value);
+document.getElementById("arvosana").innerHTML = "Arvosana: " + laskeArvosana(n1.value, n2.value, n3.value, n4.value);
+  }
+  else
+  {
+    document.getElementById("pisteet").innerHTML = "Pistemäärä (summa): VIRHE!";
+document.getElementById("arvosana").innerHTML = "Arvosana: VIRHE!";
+
+  }
+}
+
+let laskeSumma = (a, b, c, d) => {
+    return Number(a) + Number(b)+ Number(c)+ Number(d)
+}
+
+let laskeArvosana = (a, b, c, d) => {
+    let sum = laskeSumma(a, b, c, d);
+    if (sum <= 12)
+    return 0;
+    if ((sum > 12)&&(sum <= 15))
+    return 1;
+    if ((sum > 15)&&(sum <= 17))
+    return 2;
+    if ((sum > 17)&&(sum <= 19))
+    return 3;
+    if ((sum > 19)&&(sum <= 21))
+    return 4
+    else return 5;
+}
+
+ </script>
+</body>
+</html>
